@@ -45,6 +45,9 @@ table.grid_table th span {
 	text-shadow: 1px 1px 1px #fff;
 	font-size: 11px;
 }
+table.grid_table tbody tr.grid_row {
+	position: relative!important;
+}
 table.grid_table td {
 	cursor: move;
 	width: 90px!important;

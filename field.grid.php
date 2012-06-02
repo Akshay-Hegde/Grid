@@ -69,14 +69,14 @@ class Field_grid
 		$grid_fields = $this->CI->streams_m->get_stream_fields($stream_id);
 
 		// Go through the columns in the structure.
-		$continue 	= true;
 		$count 		= 1;
 
 		$insert_data = array();
 		$update_data = array();
 		$skip_delete = array();
 
-		while ($continue === true)
+		// We can have up to 100 fields.
+		while ($count < 100)
 		{
 			// The beacon is how we know there is a row there
 			// with any data.
@@ -431,7 +431,7 @@ class Field_grid
 
 		$field_rows = $this->CI->streams->fields->get_stream_fields($data_table_name, $field->field_namespace);
 
-		$html = '<tr id="'.$field_slug.'_row_'.$count.'">';
+		$html = '<tr class="grid_row" id="'.$field_slug.'_row_'.$count.'">';
 
 		// @todo: Show required
 		// @todo: Do width
@@ -451,6 +451,8 @@ class Field_grid
 				array('name="'.$field->field_slug.'_'.$row_field['field_slug'].'_'.$count.'"', 'id="'.$field->field_slug.'_'.$row_field['field_slug'].'_'.$count.'"'),
 				$row_field['input']).'</td>';
 		}
+
+		$html .= '<td><a class="btn gray grid_row_delete" data-delete-id="'.$field_slug.'_row_'.$count.'">x</a></td>';
 
 		return $html .= '</tr><input type="hidden" name="'.$field_slug.'_row_'.$count.'_beacon" value="y" />';
 	}
