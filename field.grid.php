@@ -157,7 +157,7 @@ class Field_grid
 			$this->CI->db->where('id !=', $dont_delete);
 		}
 
-		$this->CI->db->where('entry_id', $entry_id)->delete($table_name);
+		$this->CI->db->where('entry_id', $entry_id)->where('stream_id', $stream->id)->delete($table_name);
 	}
 
 	// --------------------------------------------------------------------------
