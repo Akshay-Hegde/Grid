@@ -133,7 +133,7 @@ class Field_grid
 					$row_data['entry_id'] 	= $entry_id;
 					$row_data['stream_id']	= $stream->id;
 					$row_data['created']	= date('Y-m-d H:i:s');
-					$row_data['created_by']	= (isset($this->current_user->id)) ? $this->current_user->id : null;
+					$row_data['created_by']	= (isset($this->CI->current_user->id)) ? $this->CI->current_user->id : null;
 
 					$this->CI->db->insert($table_name, $row_data);
 
