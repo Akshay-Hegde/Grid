@@ -191,6 +191,23 @@ class Field_grid
 
 		$params = array_merge($params, $attributes);
 
+		// We are going to turn the where param into an array
+		// of where parameters.
+		if (isset($params['where']))
+		{
+			$params['where'] = array($params['where']);
+		}
+		else
+		{
+			$params['where'] = array();
+		}
+
+		// -------------------------------------
+		// Filter by Entry ID
+		// -------------------------------------
+		
+		$params['where'][] = "`entry_id`='{$attributes['row_id']}'";
+
 		$entries = $this->CI->streams->entries->get_entries($params);
 
 		return $entries['entries'];
