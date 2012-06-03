@@ -131,6 +131,7 @@ class Field_grid
 				else
 				{
 					$row_data['entry_id'] 	= $entry_id;
+					$row_data['stream_id']	= $stream->id;
 					$row_data['created']	= date('Y-m-d H:i:s');
 					$row_data['created_by']	= (isset($this->current_user->id)) ? $this->current_user->id : null;
 
@@ -419,7 +420,6 @@ class Field_grid
 
 		// Establish Button Text
 		$pass_data['add_button_text'] = (isset($data['custom']['add_button_text']) and $data['custom']['add_button_text']) ? $this->CI->fields->translate_label($data['custom']['add_button_text']) : lang('streams.grid.default_add_row');
-
 
 		return $this->CI->type->load_view('grid', 'input_table', $pass_data, true);
 	}
