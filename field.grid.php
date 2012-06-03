@@ -576,16 +576,20 @@ class Field_grid
 							'Used by the grid field type.');
 
 			// ----------------------------------
-			// Entry ID column
+			// Streams ID & Entry ID columns
 			// ----------------------------------
-			// We are just going to add this manually instead of via
+			// We are just going to add these manually instead of via
 			// the Streams API so we don't end up with
 			// conflicting field name errors for multiple grid instances
 			// within a namespace.
 			// ----------------------------------
 
 			$this->CI->load->dbforge();
-			return $this->CI->dbforge->add_column($table_name, array('entry_id' => array('type' => 'INT', 'constraint' => '11')));
+			return $this->CI->dbforge->add_column($table_name, 
+					array(
+						'stream_id' 	=> array('type' => 'INT', 'constraint' => '11'),
+						'entry_id'		=> array('type' => 'INT', 'constraint' => '11')
+					));
 		}
 		else
 		{
