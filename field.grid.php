@@ -549,7 +549,6 @@ class Field_grid
 		$html .= '<td>'.form_checkbox('row_is_required_'.$count).'</td>';
 		$html .= '<td>'.form_checkbox('row_is_unique_'.$count).'</td>';
 		$html .= '<td>'.form_textarea('row_instructions_'.$count).'</td>';
-		$html .= '<td>'.form_input('row_width_'.$count, null, 'size="5"').'</td>';
 
 		return $html .= '</tr>';
 	}

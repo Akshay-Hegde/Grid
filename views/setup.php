@@ -7,7 +7,6 @@
 		<th>Required</th>
 		<th>Unique</th>
 		<th>Instructions</th>
-		<th><?php echo lang('streams.grid.width'); ?></th>
 	<tr>
 
 	</thead>
@@ -21,7 +20,6 @@
 			<td><?php echo form_checkbox('row_is_required_1', 'yes'); ?></td>
 			<td><?php echo form_checkbox('row_is_unique_1', 'yes'); ?></td>
 			<td><?php echo form_textarea('row_instructions_1'); ?></td>
-			<td><?php echo form_input('row_width_1', null, 'size="6"'); ?></td>
 		</tr>
 
 	<?php } else { ?>
@@ -33,7 +31,6 @@
 			<td><?php echo form_checkbox('row_is_required_'.$count, 'yes', ($row['is_required'] == 'yes') ? true : false); ?></td>
 			<td><?php echo form_checkbox('row_is_unique_'.$count, 'yes', ($row['is_unique'] == 'yes') ? true : false); ?></td>
 			<td><?php echo form_textarea('row_instructions_'.$count, $row['instructions']); ?></td>
-			<td><?php echo form_input('row_width_'.$count, $row['width'], 'size="6"'); ?></td>
 		</tr>
 
 		<?php $count++; } ?>
