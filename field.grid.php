@@ -767,7 +767,10 @@ class Field_grid
 	 */	
 	public function param_add_button_text($value = null)
 	{
-		return form_input('add_button_text', $value);
+		return array(
+				'input'			=> form_input('add_button_text', $value),
+				'instructions'	=> lang('streams.grid.add_button_instr')
+			);
 	}
 
 }
