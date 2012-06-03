@@ -4,6 +4,8 @@ Grid is a field type for use with Streams for PyroCMS. It allows you to create r
 
 ## Requirements
 
+Required PyroCMS 2.2 and the PyroStreams 2.3.
+
 ## Installation
 
 Place the grid folder in either your addons/_site\_ref_/field_types folder or addons/shared\_addons/field_types folder. It will then be accessible to 
