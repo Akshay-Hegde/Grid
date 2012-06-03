@@ -44,4 +44,4 @@
 
 </table>
 
-<p><a class="add_row" data-namespace="<?php echo $namespace; ?>">Add Field</a></p>
+<p><a class="add_row btn orange" data-namespace="<?php echo $namespace; ?>">Add Field</a></p>
