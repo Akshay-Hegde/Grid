@@ -640,14 +640,11 @@ class Field_grid
 			}
 		}
 
-		// Data to return to store
-		$data = array();
-
 		// Start off with row 1
 		$count = 1;
 
 		$this->CI->load->dbforge();
-		
+
 		// We can have up to 10 rows.
 		while ($count <= 10)
 		{
@@ -674,7 +671,7 @@ class Field_grid
 			// -------------------------------------
 			
 			$field = $this->CI->fields_m->get_field($field_id);
-			
+
 			// We need a valid field.
 			if ( ! $field)
 			{
@@ -707,6 +704,12 @@ class Field_grid
 
 				$count++;
 			}
+			else
+			{
+				// If it does exist, then we still need to
+				// increment.
+				$count++;
+			}
 
 			unset($field);
 			unset($field_id);
@@ -724,7 +727,7 @@ class Field_grid
 			}
 		}
 
-		return $data;
+		return null;
 	}
 
 	// --------------------------------------------------------------------------
