@@ -277,7 +277,33 @@ class Field_grid
 	 */
 	public function field_assignment_destruct($field, $stream)
 	{
-		return $this->CI->dbforge->drop_table($this->grid_table_prefix.$field->field_slug);
+		// Is this field assigned anywhere else?
+		if ($this->CI->db
+					->where('field_id', $field->id)
+					->where('stream_id', $stream->id)
+					->get(ASSIGN_TABLE)->num_rows() <= 1)
+		{
+			return $this->CI->dbforge->drop_table($this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug);
+		}
+
+		return true;
+
+	}
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Process delete for fields that have
+	 * no assignments. In this case we are just
+	 * going to drop the table
+	 *
+	 * @access 	public
+	 * @param 	obj - field
+	 * @return 	bool
+	 */
+	public function field_no_assign_destruct($field)
+	{
+		return $this->CI->dbforge->drop_table($this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug);
 	}
 
 	// --------------------------------------------------------------------------
