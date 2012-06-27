@@ -1,8 +1,7 @@
 table.grid_table {
-	background: #F3F3F3;
-	border: 1px solid #ccc;
 	box-shadow: 1px 1px 3px #ccc;
-	padding: 5px;
+	margin-bottom: 15px;
+	width: 80%!important;
 }
 table.grid_table td {
 	vertical-align: top;
@@ -10,4 +9,7 @@ table.grid_table td {
 table.grid_table input[type="text"],
 table.grid_table textarea {
 	background: #fff;
+}
+table.grid_table textarea {
+	width: 200px!important;
 }
