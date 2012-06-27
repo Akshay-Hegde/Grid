@@ -283,7 +283,7 @@ class Field_grid
 					->where('stream_id', $stream->id)
 					->get(ASSIGN_TABLE)->num_rows() <= 1)
 		{
-			return $this->CI->dbforge->drop_table($this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug);
+			return $this->remove_grid_instance($field);
 		}
 
 		return true;
@@ -303,7 +303,31 @@ class Field_grid
 	 */
 	public function field_no_assign_destruct($field)
 	{
-		return $this->CI->dbforge->drop_table($this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug);
+		return $this->remove_grid_instance($field);
+	}
+
+	// --------------------------------------------------------------------------
+
+	/**
+	 * Remove a Grid Instance
+	 *
+	 * Grid instances are just streams, so we are basically
+	 * just deleting the stream which gets rid of the assignments
+	 * as well as the stream instance and the table itself.
+	 *
+	 * @access 	private
+	 * @param 	obj - field obj
+	 * @return 	bool - success/failure of remove
+	 */
+	private function remove_grid_instance($field)
+	{
+		$table_name = $this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug;
+
+		// Get the stream via the name we can deduce from the field.
+		$stream = $this->CI->streams_m->get_stream($table_name, true, $field->field_namespace);
+
+		// Delete the stream
+		return $this->CI->streams_m->delete_stream($stream);
 	}
 
 	// --------------------------------------------------------------------------
