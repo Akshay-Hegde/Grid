@@ -52,7 +52,7 @@ table.grid_table td {
 	cursor: move;
 	width: 90px!important;
 	padding: 7px;
-	vertical-align: top;
+	vertical-align: middle;
 	border-bottom: 1px dotted #CFCFCF;
 }
 table.grid_table input[type="text"] {
