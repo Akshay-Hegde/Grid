@@ -7,11 +7,8 @@
  * inputs and loop through the values via the
  * plugin interface.
  *
- * @package		PyroStreams
- * @author		Parse19
- * @copyright	Copyright (c) 2012, Parse19
- * @license		http://parse19.com/pyrostreams/docs/license
- * @link		http://parse19.com/pyrostreams
+ * @author		Adam Fairholm
+ * @copyright	Copyright (c) 2012-2013, Adam Fairholm
  */
 class Field_grid
 {
@@ -25,12 +22,18 @@ class Field_grid
 
 	public $version					= '0.8';
 
-	public $author					= array('name' => 'Parse19', 'url' => 'http://parse19.com');
+	public $author					= array(
+										'name' 	=> 'Adam Fairholm',
+										'url' 	=> 'http://adamfairholm.com'
+									);
 
 	// --------------------------------------------------------------------------
 
 	/**
 	 * Prefix before grid database tables.
+	 *
+	 * Grid creates an extra grid streams for each grid
+	 * created.
 	 *
 	 * @access 	public
 	 * @var 	string
@@ -469,7 +472,7 @@ class Field_grid
 		$pass_data['min'] = (isset($data['custom']['min_rows']) and is_numeric($data['custom']['min_rows'])) ? $data['custom']['min_rows'] : 0;
 
 		// Establish Button Text
-		$pass_data['add_button_text'] = (isset($data['custom']['add_button_text']) and $data['custom']['add_button_text']) ? $this->CI->fields->translate_label($data['custom']['add_button_text']) : lang('streams.grid.default_add_row');
+		$pass_data['add_button_text'] = (isset($data['custom']['add_button_text']) and $data['custom']['add_button_text']) ? $this->CI->fields->translate_label($data['custom']['add_button_text']) : lang('streams:grid.default_add_row');
 
 		return $this->CI->type->load_view('grid', 'input_table', $pass_data, true);
 	}
@@ -821,7 +824,7 @@ class Field_grid
 	{
 		return array(
 				'input'			=> form_input('add_button_text', $value),
-				'instructions'	=> lang('streams.grid.add_button_instr')
+				'instructions'	=> lang('streams:grid.add_button_instr')
 			);
 	}
 

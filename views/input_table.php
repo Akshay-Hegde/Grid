@@ -1,6 +1,6 @@
 <div class="grid_table_container">
 
-<table class="grid_table" id="<?php echo $field_slug; ?>_input_table" stlye="margin-bottom: 0!important;">
+<table class="grid_table" id="<?php echo $field_slug; ?>_input_table" stlye="margin-bottom: 0!important;" cellpadding="0" cellspacing="0">
 
 <thead>
 

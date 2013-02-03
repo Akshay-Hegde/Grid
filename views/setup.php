@@ -1,4 +1,4 @@
-<table class="grid_table" id="grid_table_setup">
+<table class="grid_table" id="grid_table_setup" cellpadding="0" cellspacing="0">
 
 	<thead>
 
