@@ -209,12 +209,26 @@ class Field_grid
 	/**
 	 * Event
 	 *
+	 * Adds the events for our grid field type
+	 * as well as the fields contained
+	 * without our grid.
+	 *
 	 * @return	void
 	 */
-	public function event()
+	public function event($field)
 	{
+		// Run the grid events.
 		$this->CI->type->add_css('grid', 'grid_public.css');
 		$this->CI->type->add_js('grid', 'grid.js');
+	
+		// Run the field events for our actual grid fields.
+		$table_name = $this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug;
+
+		$streamId = $this->CI->streams_m->get_stream_id_from_slug($table_name, $field->field_namespace);
+
+		$stream_fields = $this->CI->streams_m->get_stream_fields($streamId);
+
+		$this->CI->fields->run_field_events($stream_fields);
 	}
 
 	/**
@@ -606,7 +620,6 @@ class Field_grid
 	 *
 	 * Pre-save function for creating rows.
 	 *
-	 * @access	public
 	 * @param	int - stream_id
 	 * @return	string
 	 */
