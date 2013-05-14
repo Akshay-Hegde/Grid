@@ -27,20 +27,15 @@ class Field_grid
 										'url' 	=> 'http://adamfairholm.com'
 									);
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Prefix before grid database tables.
 	 *
 	 * Grid creates an extra grid streams for each grid
 	 * created.
 	 *
-	 * @access 	public
 	 * @var 	string
 	 */
 	public $grid_table_prefix		= 'grid_rows_';
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Pre-Save
@@ -48,7 +43,6 @@ class Field_grid
 	 * Process the rows before saving them
 	 * to the database.
 	 *
-	 * @access	public
 	 * @param	string
 	 * @param	obj
 	 * @param	obj
@@ -163,12 +157,9 @@ class Field_grid
 		$this->CI->db->where('entry_id', $entry_id)->where('stream_id', $stream->id)->delete($table_name);
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Process before outputting to the backend
 	 *
-	 * @access	public
 	 * @param	array
 	 * @return	string
 	 */
@@ -176,8 +167,6 @@ class Field_grid
 	{
 		return null;
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Function called when being accessed via
@@ -217,12 +206,9 @@ class Field_grid
 		return $entries['entries'];
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Event
 	 *
-	 * @access	public
 	 * @return	void
 	 */
 	public function event()
@@ -231,12 +217,9 @@ class Field_grid
 		$this->CI->type->add_js('grid', 'grid.js');
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Field Setup Event
 	 *
-	 * @access	public
 	 * @return	void
 	 */
 	public function field_setup_event()
@@ -244,8 +227,6 @@ class Field_grid
 		$this->CI->type->add_js('grid', 'setup.js');
 		$this->CI->type->add_css('grid', 'grid.css');
 	}
-
-	// --------------------------------------------------------------------------
 	
 	/**
 	 * Process for when adding field assignment
@@ -257,7 +238,6 @@ class Field_grid
 	 * created automatically when you start adding fields to
 	 * it in the grid field type setup.
 	 *
-	 * @access 	public
 	 * @param 	obj
 	 * @param 	obj
 	 * @return 	bool
@@ -268,12 +248,9 @@ class Field_grid
 		return $this->create_grid_table($table_name, $field->field_namespace);
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Process for when removing field assignment
 	 *
-	 * @access	public
 	 * @param	obj
 	 * @param	obj
 	 * @return	void
@@ -293,14 +270,11 @@ class Field_grid
 
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Process delete for fields that have
 	 * no assignments. In this case we are just
 	 * going to drop the table
 	 *
-	 * @access 	public
 	 * @param 	obj - field
 	 * @return 	bool
 	 */
@@ -308,8 +282,6 @@ class Field_grid
 	{
 		return $this->remove_grid_instance($field);
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Remove a Grid Instance
@@ -333,12 +305,9 @@ class Field_grid
 		return $this->CI->streams_m->delete_stream($stream);
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Called when deleting an entry
 	 *
-	 * @access	public
 	 * @param	obj
 	 * @param	obj
 	 * @return	void
@@ -347,8 +316,6 @@ class Field_grid
 	{		
 		$this->CI->db->where('entry_id', $entry->id)->delete($this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug);
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Process renaming column
@@ -362,8 +329,6 @@ class Field_grid
 	{
 		return null;
 	}
-
-	// --------------------------------------------------------------------------
 
 	public function validation()
 	{
@@ -385,12 +350,9 @@ class Field_grid
 		return true;
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Output Form Input
 	 *
-	 * @access	public
 	 * @param	array
 	 * @return	string
 	 */
@@ -477,8 +439,6 @@ class Field_grid
 		return $this->CI->type->load_view('grid', 'input_table', $pass_data, true);
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * New Grid Row
 	 *
@@ -527,8 +487,6 @@ class Field_grid
 		return $html .= '</tr><input type="hidden" name="'.$field_slug.'_row_'.$count.'_beacon" value="y" />';
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Setup Row Structure
 	 *
@@ -536,7 +494,6 @@ class Field_grid
 	 * in param_rows_pre_save(). This is just a form display with
 	 * some AJAX calls.
 	 *
-	 * @access	public
 	 * @param	int - stream_id
 	 * @return	string
 	 */
@@ -548,8 +505,6 @@ class Field_grid
 
 		return $this->CI->type->load_view('grid', 'setup', $data, true);
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Fields Array
@@ -579,8 +534,6 @@ class Field_grid
 		return $fields_array;
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * AJAX call to setup a new row
 	 * when we are creating the row structure
@@ -605,8 +558,6 @@ class Field_grid
 
 		return $html .= '</tr>';
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Create the Grid Stream
@@ -648,8 +599,6 @@ class Field_grid
 			return true;
 		}
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Rows Pre-Save
@@ -783,12 +732,9 @@ class Field_grid
 		return null;
 	}
 
-	// --------------------------------------------------------------------------
-
 	/**
 	 * Minimum Number of Choices
 	 *
-	 * @access	public
 	 * @param	[string - value]
 	 * @return	string
 	 */	
@@ -796,8 +742,6 @@ class Field_grid
 	{
 		return form_input('max_rows', $value);
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Minimum Number of Rows
@@ -810,8 +754,6 @@ class Field_grid
 	{
 		return form_input('min_rows', $value);
 	}
-
-	// --------------------------------------------------------------------------
 
 	/**
 	 * Add Button Text
