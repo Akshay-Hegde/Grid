@@ -576,7 +576,8 @@ class Field_grid
 							$table_name,
 							$namespace,
 							null,
-							'Used by the grid field type.');
+							'Used by the grid field type.',
+							array('id_hidden' => 'yes'));
 
 			// ----------------------------------
 			// Streams ID & Entry ID columns
