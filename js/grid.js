@@ -27,8 +27,10 @@ $(function() {
 			data: 'count='+row_count+'&field_slug='+field_slug+'&field_id='+field_id,
 			url:  SITE_URL+'streams_core/public_ajax/field/grid/new_grid_row',
 			success: function(returned_html) {
+
 				$('table#'+field_slug+'_input_table tr:last').after(returned_html);
 				pyro.chosen();
+
 			}
 		});
 	

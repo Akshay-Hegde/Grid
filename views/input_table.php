@@ -15,28 +15,56 @@
 
 <tbody>
 
-	<?php if($entries): $count=1; foreach($entries as $entry): ?>
+	<?php if ($entries): 
+
+		$count = 1;
+
+		foreach ($entries as $entry): ?>
+
 	<tr class="grid_row" id="<?php echo $field_slug; ?>_row_<?php echo $count; ?>">
-		<?php foreach($grid_fields as $field): ?>
+		
+		<?php foreach ($grid_fields as $field): ?>
+		
 		<input type="hidden" name="<?php echo $field_slug; ?>_row_<?php echo $count; ?>_beacon" value="<?php echo (is_numeric($entry['id'])) ? $entry['id'] : 'y'; ?>" />
-		<td><?php echo $this->type->types->{$field->field_type}->form_output(array('form_slug' => $field_slug.'_'.$field->field_slug.'_'.$count, 'value' => $entry[$field->field_slug], 'custom' => $field->field_data), $entry['id'], $field); ?></td>
+		<td><?php 
+
+			$val = $entry[$field->field_slug];
+			$fs = $field_slug.'_'.$count.'_'.$field->field_slug;
+
+			echo $this->type->types->{$field->field_type}->form_output(array('form_slug' => $fs, 'value' => $val, 'custom' => $field->field_data), $entry['id'], $field);
+
+			?></td>
 		<?php endforeach; ?>
 		<td><a class="btn gray grid_row_delete" data-delete-id="<?php echo $field_slug; ?>_row_<?php echo $count; ?>">x</a></td>
 	</tr>
-	<?php $count++; endforeach; else: ?>
+	<?php 
+
+		$count++;
+		unset($val);
+
+		endforeach; 
+
+	else: ?>
 
 	<?php 
 
 		$row_count = 1;
-		while($min >= $row_count):	
+		while ($min >= $row_count):	
 
 	?>
 	<tr class="grid_row" id="<?php echo $field_slug; ?>_row_<?php echo $row_count; ?>">
+		
 		<?php foreach($grid_fields as $field): ?>
+		
 		<input type="hidden" name="<?php echo $field_slug; ?>_row_<?php echo $row_count; ?>_beacon" value="y" />
-		<td><?php echo $this->type->types->{$field->field_type}->form_output(array('form_slug' => $field_slug.'_'.$field->field_slug.'_'.$row_count, 'value' => null, 'custom' => $field->field_data), null, $field); ?></td>
+		<td><?php 
+
+			$fs = $field_slug.'_'.$count.'_'.$field->field_slug;
+
+			echo $this->type->types->{$field->field_type}->form_output(array('form_slug' => $fs, 'value' => null, 'custom' => $field->field_data), null, $field); ?></td>
 		<?php endforeach; ?>
 	</tr>
+	
 	<?php $row_count++; endwhile; ?>
 
 	<?php endif; ?>

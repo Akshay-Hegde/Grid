@@ -88,7 +88,7 @@ class Field_grid
 				foreach ($grid_fields as $row_field)
 				{
 					// Grab the post value
-					$row_data[$row_field->field_slug] = $this->CI->input->post($field->field_slug.'_'.$row_field->field_slug.'_'.$count);
+					$row_data[$row_field->field_slug] = $this->CI->input->post($field->field_slug.'_'.$count.'_'.$row_field->field_slug);
 
 					$type =& $this->CI->type->types->{$row_field->field_type};
 
@@ -367,7 +367,9 @@ class Field_grid
 	/**
 	 * Output Form Input
 	 *
-	 * @param	array
+	 * @param	array 	$data
+	 * @param 	int 	$entry_id
+	 * @param 	obj 	$field
 	 * @return	string
 	 */
 	public function form_output($data, $entry_id, $field)
@@ -429,7 +431,7 @@ class Field_grid
 				
 					foreach ($pass_data['grid_fields'] as $row_field)
 					{
-						$entries[$entry_count][$row_field->field_slug] = $this->CI->input->post($field->field_slug.'_'.$row_field->field_slug.'_'.$entry_count);
+						$entries[$entry_count][$row_field->field_slug] = $this->CI->input->post($field->field_slug.'_'.$entry_count.'_'.$row_field->field_slug);
 						$entries[$entry_count]['ordering_count'] = $entry_count;
 					}
 				}
@@ -469,11 +471,14 @@ class Field_grid
 		$field_slug 	= $this->CI->input->post('field_slug');
 		$field_id 		= $this->CI->input->post('field_id');
 
+		// Prefix for form slug.
+		$prefix = $field_slug.'_'.$count.'_';
+
 		$field = $this->CI->fields_m->get_field($field_id);
 
 		$data_table_name = $this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug;
 
-		$field_rows = $this->CI->streams->fields->get_stream_fields($data_table_name, $field->field_namespace);
+		$field_rows = $this->CI->streams->fields->get_stream_fields($data_table_name, $field->field_namespace, array(), null, $prefix);
 
 		$html = '<tr class="grid_row" id="'.$field_slug.'_row_'.$count.'">';
 
@@ -488,12 +493,7 @@ class Field_grid
 				$html .= ' width="'.$field['width'].'"';
 			}*/
 
-			// @todo: this is a really dumb way to do this, but it works
-			// for now. Please replace this.
-			$html .= '>'.str_replace(
-				array('name="'.$row_field['field_slug'].'"', 'id="'.$row_field['field_slug'].'"'),
-				array('name="'.$field->field_slug.'_'.$row_field['field_slug'].'_'.$count.'"', 'id="'.$field->field_slug.'_'.$row_field['field_slug'].'_'.$count.'"'),
-				$row_field['input']).'</td>';
+			$html .= '>'.$row_field['input'].'</td>';
 		}
 
 		$html .= '<td><a class="btn gray grid_row_delete" data-delete-id="'.$field_slug.'_row_'.$count.'">x</a></td>';
