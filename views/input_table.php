@@ -59,7 +59,7 @@
 		<input type="hidden" name="<?php echo $field_slug; ?>_row_<?php echo $row_count; ?>_beacon" value="y" />
 		<td><?php 
 
-			$fs = $field_slug.'_'.$count.'_'.$field->field_slug;
+			$fs = $field_slug.'_'.$row_count.'_'.$field->field_slug;
 
 			echo $this->type->types->{$field->field_type}->form_output(array('form_slug' => $fs, 'value' => null, 'custom' => $field->field_data), null, $field); ?></td>
 		<?php endforeach; ?>
