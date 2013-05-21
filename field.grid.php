@@ -304,7 +304,6 @@ class Field_grid
 	 * just deleting the stream which gets rid of the assignments
 	 * as well as the stream instance and the table itself.
 	 *
-	 * @access 	private
 	 * @param 	obj - field obj
 	 * @return 	bool - success/failure of remove
 	 */
@@ -389,12 +388,9 @@ class Field_grid
 		// get the data we have
 		// -------------------------------------
 
-		if (is_numeric($entry_id))
-		{
+		if (is_numeric($entry_id)) {
 			$pass_data['entries'] = $this->CI->db->where('entry_id', $entry_id)->get($data_table_name)->result_array();
-		}
-		else
-		{
+		} else {
 			$pass_data['entries'] = array();
 		}
 
@@ -460,7 +456,6 @@ class Field_grid
 	 *
 	 * Front-end AJAX function to return a new row
 	 *
-	 * @access 	public
 	 * @return 	string
 	 */
 	public function ajax_new_grid_row()
@@ -511,9 +506,13 @@ class Field_grid
 	 * @param	int - stream_id
 	 * @return	string
 	 */
-	public function param_rows($current_data, $namespace)
+	public function param_rows($current_data, $namespace, $field)
 	{
-		$data['current_data'] 	= $current_data;
+		$table_name = $this->grid_table_prefix.$field->field_namespace.'_'.$field->field_slug;
+
+		$stream = $this->CI->streams_m->get_stream($table_name, true, $field->field_namespace);
+
+		$data['current_data'] 	= $this->CI->db->where('stream_id', $stream->id)->get('data_field_assignments')->result_array();
 		$data['fields_array'] 	= $this->fields_array($namespace);
 		$data['namespace']		= $namespace;
 
@@ -528,7 +527,6 @@ class Field_grid
 	 * @todo - in the future, this should filter out
 	 * field types that are not eligible such as alt process field types.
 	 *
-	 * @access 	private
 	 * @param 	string - namespace
 	 * @return 	array
 	 */
@@ -644,7 +642,7 @@ class Field_grid
 		// We need a stream ID to go on
 		if ( ! $stream_id) return false;
 
-		$reserved_names = array('id', 'created_by', 'created', 'updated', 'ordering_count', 'entry_id');
+		$reserved_names = array('id', 'created_by', 'created', 'updated', 'ordering_count', 'entry_id', 'stream_id');
 
 		$table_cols = $this->CI->db->list_fields($data_table_name);
 
@@ -695,6 +693,10 @@ class Field_grid
 				continue;
 			}
 
+			// If we got this far we can remove it from the
+			// list of existing columns to drop
+			unset($existing_columns[array_search($field->field_slug, $existing_columns)]);
+
 			// -------------------------------------
 			// Assign Field
 			// -------------------------------------
@@ -702,10 +704,6 @@ class Field_grid
 			// Does this assignment already exist?
 			if ( ! $this->CI->fields_m->assignment_exists($stream_id, $field_id))
 			{
-				// If we got this far we can remove it from the
-				// list of existing columns to drop
-				unset($existing_columns[array_search($field->field_slug, $existing_columns)]);
-
 				$is_required 	= ($this->CI->input->post('row_is_required_'.$count) == 'yes') ? 'yes' : 'no';
 				$is_unique 		= ($this->CI->input->post('row_is_unique_'.$count) == 'yes') ? 'yes' : 'no';
 							
@@ -722,6 +720,26 @@ class Field_grid
 			}
 			else
 			{
+				// This is an assignment that already exists. We might
+				// need to update the $is_required and $is_unique, and $instructions.
+				$is_required 	= ($this->CI->input->post('row_is_required_'.$count) == 'yes') ? 'yes' : 'no';
+				$is_unique 		= ($this->CI->input->post('row_is_unique_'.$count) == 'yes') ? 'yes' : 'no';
+
+				$assign_data = array(
+					'is_required'   => $is_required,
+					'is_unique'     => $is_unique,
+					'instructions'	=> $this->CI->input->post('row_instructions_'.$count)
+				);
+
+				// This should be a model, but in order to 
+				// be compatible with Pyro 2.2.3, we're doing it
+				// here.
+				$this->CI->db
+						->limit(1)
+						->where('stream_id', $stream_id)
+						->where('field_id', $field_id)
+						->update(config_item('streams:assignments_table'), $assign_data);
+
 				// If it does exist, then we still need to
 				// increment.
 				$count++;

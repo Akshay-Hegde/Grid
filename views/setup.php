@@ -13,7 +13,7 @@
 
 	<tbody>
 
-	<?php if( ! $current_data) { ?>
+	<?php if ( ! $current_data) { ?>
 
 		<tr>
 			<td><?php echo form_dropdown('row_field_id_1', $fields_array, null, 'style="width: 100px!important;"'); ?></td>
